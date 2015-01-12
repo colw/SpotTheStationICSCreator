@@ -1,5 +1,5 @@
 # SpotTheStationICSCreator
-Converts a [SpotTheStationRSS](github.com/colw/SpotTheStationRSSParser) object into a valid ics file.
+Converts a [SpotTheStationRSSParser](http://github.com/colw/SpotTheStationRSSParser) javascript object into a valid ics file.
 
 ## Example
 ```Javascript
