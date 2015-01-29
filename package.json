@@ -1,0 +1,30 @@
+{
+  "name": "SpotTheStationICSCreator",
+  "version": "0.1.0",
+  "description": "Converts a SpotTheStationRSSParser javascript object into a valid ICS file.d",
+  "main": "spotthestationICS.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colw/SpotTheStationICSCreator.git"
+  },
+  "keywords": [
+    "nasa",
+    "ics",
+    "spot",
+    "station",
+    "spotthestation",
+    "iss"
+  ],
+  "author": "colw",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/colw/SpotTheStationICSCreator/issues"
+  },
+  "homepage": "https://github.com/colw/SpotTheStationICSCreator",
+  "dependencies": {
+    "xml2js": "^0.4.4"
+  }
+}
