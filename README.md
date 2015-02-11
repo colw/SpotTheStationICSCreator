@@ -22,3 +22,5 @@ request(RSSURI, function(error, response, body) {
     }
 });
 ```
+## Todo
+ - Error handling
