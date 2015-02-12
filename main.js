@@ -1,6 +1,5 @@
 var fs = require('fs');
 var util = require('util');
-var parseString = require('xml2js').parseString;
 
 var vCalendarTemplate = "BEGIN:VCALENDAR\r\n" +
 	"VERSION:2.0\r\n" +
@@ -47,7 +46,7 @@ function sightingsToICS(data) {
 ISS2ICS.prototype.createICS = function(jsonData, callback) {
 	var result = sightingsToICS(jsonData);
 	if (callback)
-		callback(result)
+		callback(null, result)
 }
 
 module.exports = ISS2ICS;

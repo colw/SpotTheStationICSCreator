@@ -1,26 +1,27 @@
-# SpotTheStationICSCreator
-Converts a [SpotTheStationRSSParser](http://github.com/colw/SpotTheStationRSSParser) javascript object into a valid ics file.
+# SpotTheStation ICS Creator
+Converts a [SpotTheStation RSS Reader](http://github.com/colw/spotthestation-rss-reader) Javascript object into a valid ics file.
 
 ## Example
 ```Javascript
-var fs = require('fs');
 var request = require("request");
-var IssParser = require('./spotthestationRSS.js');
-var IcsCreator = require('./spotthestationICS.js');
+var IssReader = require('spotthestation-rss-reader');
+var IcsCreator = require('../spotthestation-ics-creator/main.js');
 
-var issParser = new IssParser();
+var issReader = new IssReader();
 var icsCreator = new IcsCreator();
 
 var RSSURI = 'http://spotthestation.nasa.gov/sightings/indexrss.cfm?'
-		   + 'country=Germany&region=None&city=Berlin';
+		       + 'country=Germany&region=None&city=Berlin';
 
 request(RSSURI, function(error, response, body) {
     if (!error && response.statusCode == 200) {
-        issParser.parseRSS(body, function(jsonData) {
-        	icsCreator.createICS(jsonData, console.log);
+        issReader.parseRSS(body, function(err, jsonData) {
+          if (err) throw err;            
+        	icsCreator.createICS(jsonData, function(err, icsData) {
+        	  if (err) throw err;
+            console.log(icsData);
+        	});
         })
     }
 });
 ```
-## Todo
- - Error handling
