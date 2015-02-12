@@ -1,7 +1,7 @@
 {
-  "name": "SpotTheStation ICS Creator",
+  "name": "spotthestation-ics-creator",
   "version": "0.1.1",
-  "description": "Converts a SpotTheStationRSSParser javascript object into a valid ICS file.",
+  "description": "Converts a spotthestation-rss-reader Javascript object into a valid ICS file.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
