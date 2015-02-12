@@ -18,10 +18,14 @@ request(RSSURI, function(error, response, body) {
         issReader.parseRSS(body, function(err, jsonData) {
           if (err) throw err;            
         	icsCreator.createICS(jsonData, function(err, icsData) {
-        	  if (err) throw err;
+            if (err) throw err;
             console.log(icsData);
         	});
         })
     }
 });
 ```
+
+## Todo
+ - Improve line feed handling in ICS output.
+ - Improve error handling.
