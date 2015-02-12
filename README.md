@@ -3,9 +3,14 @@ Converts a [SpotTheStation RSS Reader](http://github.com/colw/spotthestation-rss
 
 ## Example
 ```Javascript
+# SpotTheStation ICS Creator
+Converts a [SpotTheStation RSS Reader](http://github.com/colw/spotthestation-rss-reader) Javascript object into a valid ics file.
+
+## Example
+```Javascript
 var request = require("request");
 var IssReader = require('spotthestation-rss-reader');
-var IcsCreator = require('../spotthestation-ics-creator/main.js');
+var IcsCreator = require('spotthestation-ics-creator');
 
 var issReader = new IssReader();
 var icsCreator = new IcsCreator();
@@ -18,7 +23,7 @@ request(RSSURI, function(error, response, body) {
         issReader.parseRSS(body, function(err, jsonData) {
           if (err) throw err;            
         	icsCreator.createICS(jsonData, function(err, icsData) {
-            if (err) throw err;
+        	  if (err) throw err;
             console.log(icsData);
         	});
         })
