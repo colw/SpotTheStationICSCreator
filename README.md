@@ -19,7 +19,7 @@ request(RSSURI, function(error, response, body) {
           if (err) throw err;            
         	icsCreator.createICS(jsonData, function(err, icsData) {
         	  if (err) throw err;
-            console.log(icsData);
+        	  console.log(icsData);
         	});
         })
     }
