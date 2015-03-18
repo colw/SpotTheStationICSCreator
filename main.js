@@ -16,37 +16,56 @@ var vEventTemplate = "BEGIN:VEVENT\r\n" +
 	"DESCRIPTION:%s\r\n" +
 	"END:VEVENT";
 
+var ICS_NEWLINE = '\r\n';
+
 var ISS2ICS = function() {}
 
 function toICalUTCDate(d) {
 	return d.toISOString().replace(/[.:-]+/g, '').substr(0,15) + 'Z';
 }
 
-function sightingsToICS(data) {
+function createEvent(sighting) {
+	var x = sighting; // For brevity
+
+	var dstamp = toICalUTCDate(new Date());
+	var dstart = toICalUTCDate(x.Start);
+	var dend = toICalUTCDate(x.Finish);
+
+	var dtmp = ['Approaches: %s\\n',' Departs: %s\\n',' Maximum: %s'].join(ICS_NEWLINE);
+	var dstr = util.format(dtmp, x['Approach'], x['Departure'], x['MaxElevation']);
+
+	// TODO Create better uid scheme
+	// The first 'Title' character is used to avoid clashes of different sightings at the same time.
+	return util.format(vEventTemplate, dstart+x.Title.charAt(0), dstamp, dstart, dend, x.Title, dstr);
+}
+
+function makeSightingEventsArray(sightings) {
 	var events = []
-	data.sightings.forEach(function(x) {
+	if (sightings !== undefined) {
+		events = sightings.map(createEvent);
+	}
+	return events;
+}
 
-		var dstamp = toICalUTCDate(new Date());
-		var dstart = toICalUTCDate(x.Start);
-		var dend = toICalUTCDate(x.Finish);
+function sightingsToICS(data) {
+	var events = makeSightingEventsArray(data.sightings);
 
-		var dtmp = 'Approaches: %s\\n\r\n Departs: %s\\n\r\n Maximum: %s';
-		var dstr = util.format(dtmp, x['Approach'], x['Departure'], x['MaxElevation']);
-
-		// TODO Create better uid scheme
-		// The first 'Title' character is used to avoid clashes of different sightings at the same time.
-		var ret = util.format(vEventTemplate, dstart+x.Title.charAt(0), dstamp, dstart, dend, x.Title, dstr);
-		events.push(ret);
-	});
-
-	var finalCal = util.format(vCalendarTemplate, events.join('\r\n'));
-	return finalCal;
+	if (events.length === 0) {
+		return null;
+	} else {
+		return util.format(vCalendarTemplate, events.join(ICS_NEWLINE));
+	}
 }
 
 ISS2ICS.prototype.createICS = function(jsonData, callback) {
 	var result = sightingsToICS(jsonData);
-	if (callback)
-		callback(null, result)
+	if (result === null && callback) {
+		return callback(new Error('Zero sightings'));
+	}
+
+	if (callback) {
+		callback(null, result);
+	}
 }
 
 module.exports = ISS2ICS;
